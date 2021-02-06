@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">App Clima</string>
+    <string name="app_name">Mi primera Aplicacion</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_nota">MainActivity</string>
+    <string name="title_note">Notas</string>
+    <string name="title_favorite">Favoritas</string>
+    <string name="title_acount">Mi perfil</string>
+    <string name="texto_prueba">texto de prueba</string>
 </resources>
