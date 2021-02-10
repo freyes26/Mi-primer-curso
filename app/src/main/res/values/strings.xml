@@ -7,4 +7,17 @@
     <string name="title_favorite">Favoritas</string>
     <string name="title_acount">Mi perfil</string>
     <string name="texto_prueba">texto de prueba</string>
+    <string name="dialog_title">Nueva Nota</string>
+    <string name="dialog_description">Introdusca los datos de la nueva nota</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="note_title">Titulo</string>
+    <string name="note_commens">Comentarios</string>
+    <string name="note_favorite">Favoritos</string>
+    <string name="azul">Azul</string>
+    <string name="rojo">Rojo</string>
+    <string name="verde">Verde</string>
+    <string name="dialog_color">Indique el color de la nota</string>
+    <string name="Blanco">Blanco</string>
+    <string name="addnote">Crear Nota</string>
 </resources>
