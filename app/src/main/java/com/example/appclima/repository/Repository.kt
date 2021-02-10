@@ -1,10 +1,11 @@
 package com.example.appclima.repository
 
-import androidx.lifecycle.LiveData
 import com.example.appclima.repository.database.model.Note
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getNote(): List<Note>
-    suspend fun getFavoriteNote(): LiveData<List<Note>>
-    suspend fun inserNote(note:Note)
+    fun getNote(): Flow<List<Note>>
+    fun getFavoriteNote(): Flow<List<Note>>
+    suspend fun inserNote(note: Note)
+    suspend fun update(note: Note)
 }

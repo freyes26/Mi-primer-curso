@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_new_note"
-        android:icon="@drawable/ic_baseline_note_add_24"
+        android:icon="@drawable/ic_baseline_note_add_24_nigth"
         android:title="@string/addnote"
         app:showAsAction="ifRoom" />
 </menu>

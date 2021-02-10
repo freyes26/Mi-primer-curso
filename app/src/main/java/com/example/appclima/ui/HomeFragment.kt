@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.appclima.BR
@@ -14,30 +15,27 @@ import com.example.appclima.ui.adapter.NoteAdapter
 import com.example.appclima.viewModel.HomeViewModel
 
 class HomeFragment : Fragment() {
-    private lateinit var _binding : FragmentHomeBinding
+    private lateinit var _binding: FragmentHomeBinding
     val binding get() = _binding
 
-    private lateinit var homeViewModel : HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModels()
 
-    private lateinit var adapter : NoteAdapter
+    private lateinit var adapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        adapter = NoteAdapter{ note -> favoriteOnClick(note)}
-        homeViewModel = makeApiCall()
-        homeViewModel.getNote()
-
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        adapter = NoteAdapter { note -> favoriteOnClick(note) }
         _binding.lifecycleOwner = viewLifecycleOwner
+        makeApiCall()
         return binding.root
     }
 
@@ -45,27 +43,24 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.setVariable(BR.viewModel, homeViewModel)
         binding.executePendingBindings()
-        if (binding.notaerecycler != null){
+        if (binding.notaerecycler != null) {
             binding.notaerecycler!!.adapter = adapter
             binding.notaerecycler!!.layoutManager = LinearLayoutManager(requireContext())
             binding.notaerecycler!!.setHasFixedSize(false)
-        }
-        else{
+        } else {
             val numColumns = getNumColumns()
             binding.notasrecyclerlan!!.adapter = adapter
-            binding.notasrecyclerlan!!.layoutManager = StaggeredGridLayoutManager(numColumns,StaggeredGridLayoutManager.VERTICAL )
+            binding.notasrecyclerlan!!.layoutManager = StaggeredGridLayoutManager(numColumns, StaggeredGridLayoutManager.VERTICAL)
             binding.notasrecyclerlan!!.setHasFixedSize(false)
         }
     }
 
-    fun makeApiCall() : HomeViewModel{
-        val viewModel = HomeViewModel()
-        viewModel.allNota.observe(requireActivity(),{
+    fun makeApiCall() {
+        homeViewModel.allNote.observe(requireActivity(), {
             it?.let {
                 adapter.submitList(it as MutableList<Note>)
             }
         })
-        return viewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -73,7 +68,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_new_note -> {
                 showDialogAddNote()
                 return true
@@ -82,20 +77,19 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun showDialogAddNote(){
+    fun showDialogAddNote() {
         val newNote = NewNote()
         newNote.show(requireActivity().supportFragmentManager, "Tag")
     }
 
-    private fun getNumColumns() : Int{
+    private fun getNumColumns(): Int {
         val displaymetrix = requireContext().resources.displayMetrics
-        val dpWith = displaymetrix.widthPixels/displaymetrix.density
-        return (dpWith/180).toInt()
+        val dpWith = displaymetrix.widthPixels / displaymetrix.density
+        return (dpWith / 180).toInt()
     }
 
-    private fun favoriteOnClick(nota: Note){
-        val newNote = Note(nota.id,nota.title,nota.comment,!nota.favorite,nota.color)
+    private fun favoriteOnClick(nota: Note) {
+        val newNote = Note(nota.id, nota.title, nota.comment, !nota.favorite, nota.color)
         homeViewModel.updateNote(newNote)
     }
-
 }

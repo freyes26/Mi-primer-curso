@@ -9,7 +9,8 @@ class NoteApplication : Application() {
     companion object {
         lateinit var application: NoteApplication
     }
-    val db  by lazy { NoteDataBase.getDatabase(applicationContext) }
+
+    val db by lazy { NoteDataBase.getDatabase(applicationContext) }
     override fun onCreate() {
         super.onCreate()
         application = this

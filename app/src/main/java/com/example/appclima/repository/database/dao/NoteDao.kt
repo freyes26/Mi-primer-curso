@@ -1,24 +1,25 @@
 package com.example.appclima.repository.database.dao
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.appclima.repository.database.model.Note
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM Note")
-    fun getNote(): List<Note>
+    fun getNote(): Flow<List<Note>>
 
     @Query("SELECT * FROM Note WHERE favorite = 1")
-    fun getNoteByFavorite(): LiveData<List<Note>>
+    fun getNoteByFavorite(): Flow<List<Note>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(note: Note)
 
     @Query("DELETE FROM Note")
     fun deleteAll()
+
+    @Update
+    fun upsate(note: Note)
+
 
 }

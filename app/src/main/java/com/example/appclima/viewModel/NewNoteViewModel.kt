@@ -22,21 +22,21 @@ class NewNoteViewModel : ViewModel() {
     val color get() = _color
 
 
-    fun saveNote(){
+    fun saveNote() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 suspend {
-                    repository.getValidator(1)?.inserNote(Note(null,title.value!!,description.value!!,favorite.value!!,color.value!!))
+                    repository.getValidator(1).inserNote(Note(null, title.value!!, description.value!!, favorite.value!!, color.value!!))
                 }.invoke()
             }
         }
     }
 
-    fun setColor(colorSet : String){
+    fun setColor(colorSet: String) {
         _color.value = colorSet
     }
 
-    fun setFavorite(favoriteSet : Boolean){
+    fun setFavorite(favoriteSet: Boolean) {
         _favorite.value = favoriteSet
     }
 }
